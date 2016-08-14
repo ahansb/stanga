@@ -1,0 +1,7 @@
+extends ../shared/layout
+block main-content
+    h1(class="jumbotron") Welcome to Stanga System
+    if (currentUser)
+        h3(class="text-success") You are now logged in
+    if (!currentUser)
+        h3(class="text-danger") You are now NOT logged in

@@ -1,0 +1,41 @@
+doctype
+html
+    head
+        title Stanga System
+        link(rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css")
+        //link(rel="stylesheet" href="/css/site.css")
+        //link(rel="stylesheet" href="/lib/jquery-ui/themes/smoothness/jquery-ui.min.css")
+    body
+        header.nav
+        .container
+            .navbar-header
+                a.navbar-brand(href="/") Stanga System
+            .navbar-collapse.collapse
+                ul.nav.navbar-nav
+                    li
+
+                    li(width="100")
+                        a(href="/")
+                    li
+                        a(href="/") Home
+                    if (currentUser)
+                        li
+                            a(href="/" class="btn btn-success") #{currentUser.username}
+                        li
+                            a(href="/logout" class="btn btn-success") Logout
+                    if (!currentUser)
+                        li
+                            a(href="/register" class="btn btn-success") Register
+                        li
+                            a(href="/login" class="btn btn-success") Login
+
+        .container
+            if (errorMessage)
+                .alert.alert-danger #{errorMessage}
+
+            block main-content
+        br
+        footer
+            p.text-center
+                | &copy; Andrej Boyadjiev 2016
+        include scripts
