@@ -3,10 +3,11 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     passport = require('passport');
+var rootPath = path.normalize(__dirname + '/../../');
 
 module.exports = function (app, config) {
     app.set('view engine', 'jade');
-    app.set('views', config.rootPath + '/server/views');
+    app.set('views', rootPath + '/server/views');
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
