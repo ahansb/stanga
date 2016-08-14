@@ -5,15 +5,15 @@ var requiredMessage = '{PATH} is required';
 
 module.exports.init = function () {
     var userSchema = mongoose.Schema({
-        username:{type: String, unique: true},
-        email: {type: String, unique: true},
+        username: {type: String, unique: true, sparse: true},
+        email: {type: String, unique: true, sparse: true},
         salt: String,
         hashPass: String,
-        facebook:{
-            id: {type:String},
-            token:{type:String},
-            email:{type:String},
-            username:{type:String}
+        facebook: {
+            id: {type: String},
+            token: {type: String},
+            email: {type: String},
+            username: {type: String}
         }
     });
 
