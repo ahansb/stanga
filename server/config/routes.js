@@ -1,5 +1,6 @@
 var auth = require('./auth'),
-    controllers = require('../controllers');
+    controllers = require('../controllers')
+    passport=require('passport');
 
 module.exports=function(app){
   app.get('/register',controllers.users.getRegistered);
@@ -8,6 +9,11 @@ module.exports=function(app){
   app.get('/login',controllers.users.getLogin);
   app.post('/login',auth.login);
   app.get('/logout',auth.logout);
+
+  app.get('/auth/facebook', auth.facebookLogin);
+
+  app.get('/auth/facebook/callback',
+      auth.facebookRedirect);
 
   app.get('/error-login', function (req, res) {
     res.render('users/error-page');

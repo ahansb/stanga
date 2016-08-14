@@ -15,11 +15,21 @@ module.exports = {
                 if (err) {
                     return next(err);
                 }
+
                 res.redirect('/');
             })
         });
 
        auth(req,res,next);
+    },
+    facebookLogin:function(req,res,next){
+        var auth = passport.authenticate('facebook',{scope: 'public_profile,email'});
+        auth(req,res,next);
+    },
+    facebookRedirect: function(req,res,next){
+        var auth = passport.authenticate('facebook', { successRedirect: '/',
+            failureRedirect: '/login' })  ;
+        auth(req,res,next);
     },
     logout: function (req, res, next) {
         req.logout();

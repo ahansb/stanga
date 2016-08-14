@@ -1,6 +1,8 @@
 var passport = require('passport'),
     LocalStrategy = require('passport-local'),
-    User = require('mongoose').model('User');
+    FacebookStrategy = require('passport-facebook').Strategy,
+    User = require('mongoose').model('User'),
+    constants = require('../common/constants');
 
 module.exports = function() {
     passport.use(new LocalStrategy(function(username, password, done) {
@@ -41,4 +43,39 @@ module.exports = function() {
             }
         })
     });
+
+    passport.use(new FacebookStrategy({
+            clientID: constants.facebookAuth.appID,
+            clientSecret: constants.facebookAuth.appSecret,
+            callbackURL: constants.facebookAuth.callbackURL
+        },
+        function(accessToken, refreshToken, profile, done) {
+            User.findOne({'facebook.id': profile.id}).exec(function(err, user){
+                if(err){
+                    return done(err);
+                }
+                if(user){
+                    return done(null, user);
+                }
+                else {
+                    var newUser = new User();
+
+                    newUser.facebook.id = profile.id;
+                    newUser.facebook.token = accessToken;
+                    if(profile.email){
+                        newUser.facebook.email = profile.email;
+                    }
+
+                    newUser.facebook.username = profile.displayName;
+
+                    newUser.save(function(err){
+                        if(err){
+                            throw err;
+                        }
+                        return done(null, newUser);
+                    });
+                }
+            });
+        }
+    ));
 };
