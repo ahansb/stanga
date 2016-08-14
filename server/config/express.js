@@ -3,6 +3,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     passport = require('passport');
+var path = require('path');
 var rootPath = path.normalize(__dirname + '/../../');
 
 module.exports = function (app, config) {
